@@ -29,13 +29,20 @@ Then in Overleaf:
 
 ## `./backup_to_github.sh "message"` — end of day
 
-Pushes the day's combined work to GitHub for safekeeping.
+Pushes the day's combined work to GitHub for safekeeping. Before the push, it **automatically**:
+
+1. runs `./track_progress.sh` to log today's page count of `main.pdf` to `progress.csv`,
+2. runs `Rscript plot_progress.R` to refresh `figures/progress.pdf`.
+
+So your progress chart updates itself once a day with no extra effort.
 
 ```bash
 ./backup_to_github.sh "Chapter 3 figures and writing"
 ```
 
 Run this **once or twice a day**, not after every change. The point is a clean version history with meaningful commit messages, not a wall of "wip" commits.
+
+If `main.pdf` doesn't exist yet (you haven't compiled), the progress step is skipped and the backup still runs.
 
 ## A typical day
 

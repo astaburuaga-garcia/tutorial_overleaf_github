@@ -66,11 +66,24 @@ git remote -v   # sanity check — you should see both
 
 ### 6. Add the helper scripts
 
-Copy `scripts/from_overleaf.sh`, `scripts/to_overleaf.sh`, `scripts/backup_to_github.sh` from this repo into your `thesis/` directory and make them executable:
+Copy all five helper scripts from this repo into your `thesis/` directory:
 
 ```bash
-chmod +x *.sh
+cp /groups/nils/resources/tutorial_overleaf_github/scripts/* .
+chmod +x *.sh *.R
 ```
+
+You'll have:
+
+- `from_overleaf.sh` — pull writing from Overleaf
+- `to_overleaf.sh` — push figures/code to Overleaf
+- `backup_to_github.sh` — daily GitHub backup (also updates the progress plot)
+- `track_progress.sh` — log today's page count to `progress.csv`
+- `plot_progress.R` — regenerate `figures/progress.pdf` from the log
+
+The progress log and plot update **automatically** every time you run `backup_to_github.sh` — so just keep running it once a day and you'll get a free progress chart over time.
+
+Requirements: `pdfinfo` (poppler) and `Rscript` (with `ggplot2` if you want the prettier version) on the server.
 
 ### 7. Create the project structure
 
@@ -113,11 +126,13 @@ Then switch to Overleaf, `\includegraphics{figures/volcano.pdf}`, write your sec
 ./from_overleaf.sh
 ```
 
-### End of day — backup to GitHub
+### End of day — backup to GitHub (also updates progress chart)
 
 ```bash
 ./backup_to_github.sh "Day's work: chapter 3 figures and writing"
 ```
+
+This automatically logs today's page count and regenerates `figures/progress.pdf` before the push, so the progress chart stays current with no extra effort.
 
 ---
 
