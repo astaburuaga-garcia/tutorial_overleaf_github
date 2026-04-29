@@ -3,7 +3,7 @@
 A tutorial for setting up a writing workflow for a thesis (or any LaTeX paper) using three tools:
 
 - **GitHub** is the canonical repo. Everything important ends up there.
-- **The compute server** (ITB / Michaelis) is where work happens: figures, code, analysis.
+- **The ITB server** is where work happens: figures, code, analysis.
 - **Overleaf** is just for writing LaTeX in the browser.
 
 ![Workflow with GitHub as the single source of truth](docs/workflow.svg)
@@ -144,7 +144,7 @@ thesis/
 ## Prerequisites
 
 - GitHub account ([github.com](https://github.com))
-- SSH access to michaelis (or another compute server)
+- SSH access to the ITB server
 - An SSH key or personal-access-token configured for GitHub. See [docs/03-authentication.md](docs/03-authentication.md).
 - Overleaf account on a Premium / institutional plan (Charité, HU). Git access is **not** available on free accounts.
 - `pdfinfo` (poppler) and `Rscript` installed on the server, only needed for the progress chart.
