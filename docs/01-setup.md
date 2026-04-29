@@ -102,6 +102,10 @@ git push -u github master
 
 > The whole workflow uses `master` (Overleaf forces it). Don't rename your local branch to `main`, that just creates a mismatch.
 
+### 9. Confirm `master` is the default branch on GitHub
+
+Open the repo on github.com → `Settings → Branches → Default branch`. If it shows `main`, click the swap icon and switch it to `master`. Pushing to an empty repo usually sets the default automatically, but on accounts where the org-wide default is `main`, GitHub may still create an empty `main` branch and keep it as the default.
+
 ## Sanity check
 
 ```bash

@@ -99,7 +99,9 @@ mkdir -p code figures
 git push -u github master
 ```
 
-> **Branch name:** the whole workflow uses `master` because Overleaf forces `master`. Don't rename to `main` — it just creates a mismatch with the Overleaf remote.
+After the first push, **check on GitHub that `master` is the default branch** (it should be, since you pushed to an empty repo, but verify): `Settings → Branches → Default branch`. If it shows `main` for any reason, switch it to `master` here, otherwise the GitHub UI will keep nagging you and Pull Requests will target the wrong branch.
+
+> **Branch name:** the whole workflow uses `master` because Overleaf forces `master`. Don't rename to `main`, it just creates a mismatch with the Overleaf remote.
 
 ### Sanity check
 
