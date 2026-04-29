@@ -2,7 +2,7 @@
 
 ## "Authentication failed"
 
-You didn't enter the right token (Overleaf Git token, not your Overleaf password — they're different) or didn't add your SSH key to GitHub. See [03-authentication.md](03-authentication.md).
+You didn't enter the right token (Overleaf Git token, not your Overleaf password, they're different) or didn't add your SSH key to GitHub. See [03-authentication.md](03-authentication.md).
 
 ## Merge conflicts
 
@@ -43,7 +43,7 @@ Overleaf moved ahead of your server copy. Pull first:
 
 ## Overleaf doesn't show my new figure
 
-After `./to_overleaf.sh`, Overleaf needs to **pull**. Click the Git icon in Overleaf → Pull. Or wait a few minutes — Overleaf auto-pulls. Then recompile.
+After `./to_overleaf.sh`, Overleaf needs to **pull**. Click the Git icon in Overleaf → Pull. Or wait a few minutes, Overleaf auto-pulls. Then recompile.
 
 ## Default branch is `master`, not `main`
 
@@ -73,7 +73,7 @@ echo "big_data_file.csv" >> .gitignore
 git commit --amend --no-edit
 ```
 
-If you already pushed, ask for help — rewriting public history is a pain and it's easier to do it once with someone who's done it before.
+If you already pushed, ask for help, rewriting public history is a pain and it's easier to do it once with someone who's done it before.
 
 ## `./from_overleaf.sh: Permission denied`
 

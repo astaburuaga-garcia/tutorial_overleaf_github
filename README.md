@@ -2,9 +2,9 @@
 
 A tutorial for setting up a thesis (or any LaTeX paper) writing workflow that combines:
 
-- **GitHub** — the **single source of truth**, canonical repo, version history
-- **A compute server** (e.g. ITB / Michaelis) — where everything happens (R / Python, figure generation)
-- **Overleaf** — just for writing LaTeX in the browser
+- **GitHub**: the **single source of truth**, canonical repo, version history
+- **A compute server** (e.g. ITB / Michaelis), where everything happens (R / Python, figure generation)
+- **Overleaf**: just for writing LaTeX in the browser
 
 The server syncs with GitHub via two helper scripts (one push, one pull). Overleaf occasionally syncs writing back to the server. This repo gives you the scripts and step-by-step setup.
 
@@ -16,11 +16,11 @@ The server syncs with GitHub via two helper scripts (one push, one pull). Overle
 
 | Place        | Role                                                          |
 | ------------ | ------------------------------------------------------------- |
-| **GitHub**   | **Single source of truth** — canonical repo, version history  |
-| **Server**   | Where everything happens — R / Python, figure generation      |
+| **GitHub**   | **Single source of truth**: canonical repo, version history  |
+| **Server**   | Where everything happens, R / Python, figure generation      |
 | **Overleaf** | Just for writing LaTeX                                        |
 
-GitHub is canonical: anything important must end up there. The server is where you actually work — generate figures, run analysis, edit code. Overleaf is the comfortable LaTeX editor for the writing parts; you periodically bring its writing back to the server, and the server pushes everything onward to GitHub.
+GitHub is canonical: anything important must end up there. The server is where you actually work, generate figures, run analysis, edit code. Overleaf is the comfortable LaTeX editor for the writing parts; you periodically bring its writing back to the server, and the server pushes everything onward to GitHub.
 
 ---
 
@@ -30,7 +30,7 @@ GitHub is canonical: anything important must end up there. The server is where y
 
 A copy of the **HU Berlin PhD thesis template** ([github.com/steinbrecht/template-phd-thesis](https://github.com/steinbrecht/template-phd-thesis)) is bundled in this repo at [`templates/phd-thesis/`](templates/phd-thesis/). Either:
 
-- **Use the bundled copy** (recommended — same path on every machine):
+- **Use the bundled copy** (recommended, same path on every machine):
 
   ```bash
   cp -r /groups/nils/resources/tutorial_overleaf_github/templates/phd-thesis ~/my-thesis
@@ -38,7 +38,7 @@ A copy of the **HU Berlin PhD thesis template** ([github.com/steinbrecht/templat
 
 - **Or download a fresh copy** from `github.com/steinbrecht/template-phd-thesis` (`Code → Download ZIP`).
 
-You can also bring your own LaTeX project — the rest of the workflow doesn't depend on this specific template.
+You can also bring your own LaTeX project, the rest of the workflow doesn't depend on this specific template.
 
 ### 2. Upload to Overleaf
 
@@ -54,7 +54,7 @@ In Overleaf: `Menu → Git → copy URL`.
 
 ### 4. Create an empty GitHub repo
 
-[github.com/new](https://github.com/new) — make it **private**, do **not** initialise with a README (the repo must start empty).
+[github.com/new](https://github.com/new), make it **private**, do **not** initialise with a README (the repo must start empty).
 
 ### 5. On the server, clone from Overleaf and add GitHub as a second remote
 
@@ -63,7 +63,7 @@ git clone <overleaf-url> thesis
 cd thesis
 git remote rename origin overleaf
 git remote add github <github-url>
-git remote -v   # sanity check — you should see both
+git remote -v   # sanity check, you should see both
 ```
 
 ### 6. Add the helper scripts
@@ -77,13 +77,13 @@ chmod +x *.sh *.R
 
 You'll have:
 
-- `from_overleaf.sh` — pull writing from Overleaf
-- `to_overleaf.sh` — push figures/code to Overleaf
-- `backup_to_github.sh` — daily GitHub backup (also updates the progress plot)
-- `track_progress.sh` — log today's page count to `progress.csv`
-- `plot_progress.R` — regenerate `figures/progress.pdf` from the log
+- `from_overleaf.sh`, pull writing from Overleaf
+- `to_overleaf.sh`, push figures/code to Overleaf
+- `backup_to_github.sh`, daily GitHub backup (also updates the progress plot)
+- `track_progress.sh`, log today's page count to `progress.csv`
+- `plot_progress.R`, regenerate `figures/progress.pdf` from the log
 
-The progress log and plot update **automatically** every time you run `backup_to_github.sh` — so just keep running it once a day and you'll get a free progress chart over time.
+The progress log and plot update **automatically** every time you run `backup_to_github.sh`, so just keep running it once a day and you'll get a free progress chart over time.
 
 Requirements: `pdfinfo` (poppler) and `Rscript` (with `ggplot2` if you want the prettier version) on the server.
 
@@ -102,13 +102,13 @@ Adjust `.gitignore` to your project (data file extensions, language-specific bui
 git push -u github main
 ```
 
-You'll be asked for credentials — see [docs/03-authentication.md](docs/03-authentication.md) for SSH key / personal access token setup.
+You'll be asked for credentials, see [docs/03-authentication.md](docs/03-authentication.md) for SSH key / personal access token setup.
 
 ---
 
 ## Daily routine
 
-### Start of the day — pull what you wrote in Overleaf last night
+### Start of the day, pull what you wrote in Overleaf last night
 
 ```bash
 ./from_overleaf.sh
@@ -128,7 +128,7 @@ Then switch to Overleaf, `\includegraphics{figures/volcano.pdf}`, write your sec
 ./from_overleaf.sh
 ```
 
-### End of day — backup to GitHub (also updates progress chart)
+### End of day, backup to GitHub (also updates progress chart)
 
 ```bash
 ./backup_to_github.sh "Day's work: chapter 3 figures and writing"
@@ -156,20 +156,20 @@ thesis/
 
 ## What you need before Thursday's session
 
-- [ ] **GitHub account** — sign up at [github.com](https://github.com) if needed
-- [ ] **Server access** — laptop set up to SSH into the ITB / Michaelis server
-- [ ] **GitHub authentication** — personal access token or SSH key configured (see [docs/03-authentication.md](docs/03-authentication.md))
+- [ ] **GitHub account**: sign up at [github.com](https://github.com) if needed
+- [ ] **Server access**: laptop set up to SSH into the ITB / Michaelis server
+- [ ] **GitHub authentication**: personal access token or SSH key configured (see [docs/03-authentication.md](docs/03-authentication.md))
 - [ ] **Overleaf account** with Git access (institutional login)
 
 ---
 
 ## Repo contents
 
-- [`scripts/`](scripts/) — the helper scripts (Overleaf↔server sync, GitHub backup, progress tracking)
-- [`templates/phd-thesis/`](templates/phd-thesis/) — bundled HU Berlin PhD thesis template (steinbrecht)
-- [`templates/.gitignore`](templates/.gitignore) — starter `.gitignore` for LaTeX + R + Python
-- [`docs/`](docs/) — setup, daily-workflow, authentication, and troubleshooting guides
-- [`docs/OnePager.md`](docs/OnePager.md) — printable one-page summary
+- [`scripts/`](scripts/), the helper scripts (Overleaf↔server sync, GitHub backup, progress tracking)
+- [`templates/phd-thesis/`](templates/phd-thesis/), bundled HU Berlin PhD thesis template (steinbrecht)
+- [`templates/.gitignore`](templates/.gitignore), starter `.gitignore` for LaTeX + R + Python
+- [`docs/`](docs/), setup, daily-workflow, authentication, and troubleshooting guides
+- [`docs/OnePager.md`](docs/OnePager.md), printable one-page summary
 
 ---
 
@@ -181,5 +181,5 @@ Open an issue on this repo or ask Rosario directly.
 
 ## Credits
 
-- **LaTeX template**: the bundled [`templates/phd-thesis/`](templates/phd-thesis/) is the **HU Berlin PhD thesis template by steinbrecht** — [github.com/steinbrecht/template-phd-thesis](https://github.com/steinbrecht/template-phd-thesis). Used and redistributed unchanged. Please credit the original repository when you reuse the template.
+- **LaTeX template**: the bundled [`templates/phd-thesis/`](templates/phd-thesis/) is the **HU Berlin PhD thesis template by steinbrecht**: [github.com/steinbrecht/template-phd-thesis](https://github.com/steinbrecht/template-phd-thesis). Used and redistributed unchanged. Please credit the original repository when you reuse the template.
 - **Helper scripts and tutorial**: Rosario Astaburuaga-García.

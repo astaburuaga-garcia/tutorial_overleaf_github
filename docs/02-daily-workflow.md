@@ -2,7 +2,7 @@
 
 Three scripts. Three moments in the day.
 
-## `./from_overleaf.sh` — start of session, or after writing in Overleaf
+## `./from_overleaf.sh`, start of session, or after writing in Overleaf
 
 Pulls the latest Overleaf changes onto the server.
 
@@ -14,7 +14,7 @@ Run this:
 - First thing in the morning if you wrote on Overleaf the night before.
 - Any time you switched to Overleaf to write and now you're back on the server.
 
-## `./to_overleaf.sh "message"` — pushed a new figure / script change
+## `./to_overleaf.sh "message"`, pushed a new figure / script change
 
 Stages everything new, commits with your message, pushes to Overleaf.
 
@@ -23,11 +23,11 @@ Stages everything new, commits with your message, pushes to Overleaf.
 ```
 
 Then in Overleaf:
-1. Click the **Git** icon → **Pull** (or wait — Overleaf pulls automatically every few minutes).
+1. Click the **Git** icon → **Pull** (or wait, Overleaf pulls automatically every few minutes).
 2. Add `\includegraphics{figures/volcano.pdf}` where you want it.
 3. Recompile.
 
-## `./backup_to_github.sh "message"` — end of day
+## `./backup_to_github.sh "message"`, end of day
 
 Pushes the day's combined work to GitHub for safekeeping. Before the push, it **automatically**:
 

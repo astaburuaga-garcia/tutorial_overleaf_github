@@ -53,7 +53,7 @@ You forgot to enable a credential helper. On the server:
 git config --global credential.helper store
 ```
 
-Then push once — the credentials are remembered after that.
+Then push once, the credentials are remembered after that.
 
 ## Rotating tokens
 

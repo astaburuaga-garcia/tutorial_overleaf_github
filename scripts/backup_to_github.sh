@@ -1,5 +1,5 @@
 #!/bin/bash
-# backup_to_github.sh — push the day's work to GitHub for version control
+# backup_to_github.sh, push the day's work to GitHub for version control
 # Usage: ./backup_to_github.sh "summary of the day's work"
 #
 # Before pushing, this also updates the thesis-progress log and plot:
@@ -30,11 +30,11 @@ if [ -f main.pdf ] && command -v pdfinfo >/dev/null 2>&1; then
   if command -v Rscript >/dev/null 2>&1; then
     run Rscript plot_progress.R progress.csv figures/progress.pdf
   else
-    echo "(Rscript not found — skipping plot regeneration)"
+    echo "(Rscript not found, skipping plot regeneration)"
     echo ""
   fi
 else
-  echo "(main.pdf or pdfinfo not available — skipping progress tracking)"
+  echo "(main.pdf or pdfinfo not available, skipping progress tracking)"
   echo ""
 fi
 

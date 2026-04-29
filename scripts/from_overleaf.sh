@@ -1,5 +1,5 @@
 #!/bin/bash
-# from_overleaf.sh — pull the latest writing changes from Overleaf
+# from_overleaf.sh, pull the latest writing changes from Overleaf
 # Usage: ./from_overleaf.sh
 
 set -e

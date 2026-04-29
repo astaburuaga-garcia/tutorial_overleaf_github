@@ -1,5 +1,5 @@
 #!/bin/bash
-# to_overleaf.sh — push your latest changes (figures, code) to Overleaf
+# to_overleaf.sh, push your latest changes (figures, code) to Overleaf
 # Usage: ./to_overleaf.sh "your commit message"
 
 set -e

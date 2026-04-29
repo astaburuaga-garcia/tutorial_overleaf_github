@@ -1,9 +1,8 @@
 #!/bin/bash
-# track_progress.sh — log today's thesis page count
+# track_progress.sh, log today's thesis page count
 # Usage: ./track_progress.sh [path/to/main.pdf]
 #
-# Appends "YYYY-MM-DD,<pages>" to progress.csv. One entry per day —
-# re-running on the same day overwrites that day's row.
+# Appends "YYYY-MM-DD,<pages>" to progress.csv. One entry per day, # re-running on the same day overwrites that day's row.
 
 set -e
 

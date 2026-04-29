@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-# plot_progress.R — plot thesis page count over time
+# plot_progress.R, plot thesis page count over time
 # Usage: Rscript plot_progress.R [progress.csv] [progress.pdf]
 
 args <- commandArgs(trailingOnly = TRUE)

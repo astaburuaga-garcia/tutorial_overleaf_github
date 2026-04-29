@@ -1,4 +1,4 @@
-# Thesis workflow — one-page summary
+# Thesis workflow, one-page summary
 
 **Three places, three roles:**
 
@@ -32,7 +32,7 @@ The server pushes/pulls to GitHub via helper scripts. Overleaf occasionally sync
 | Start of day (wrote last night) | `./from_overleaf.sh`                               |
 | Generated a new figure          | `./to_overleaf.sh "Add volcano plot for ch 3"`     |
 | Switching back to the server    | `./from_overleaf.sh`                               |
-| End of day — push to GitHub     | `./backup_to_github.sh "Day's work: ..."`          |
+| End of day, push to GitHub     | `./backup_to_github.sh "Day's work: ..."`          |
 
 `backup_to_github.sh` also auto-runs `track_progress.sh` and `plot_progress.R` to keep the page-count chart fresh.
 

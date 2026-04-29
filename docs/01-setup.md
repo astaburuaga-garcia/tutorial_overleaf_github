@@ -5,7 +5,7 @@ This walks through the same steps as the README, with screenshots-friendly detai
 ## Prerequisites
 
 - A computer with `git` installed (already there on the cluster).
-- An Overleaf account on a Premium / institutional plan (HU, Charité, etc.) — Git access is **not** available on free accounts.
+- An Overleaf account on a Premium / institutional plan (HU, Charité, etc.), Git access is **not** available on free accounts.
 - A GitHub account.
 - SSH access to the compute server.
 
@@ -31,7 +31,7 @@ Set the main file (usually `main.tex`) and **compile once** to confirm it works.
 
 ### 2. Enable Git access in Overleaf
 
-Open the project, then `Menu (top-left) → Git`. Copy the URL — it looks like:
+Open the project, then `Menu (top-left) → Git`. Copy the URL, it looks like:
 
 ```
 https://git.overleaf.com/<project-id>
@@ -44,7 +44,7 @@ You will be asked for a **Git token** the first time you push or pull. Generate 
 [github.com/new](https://github.com/new):
 
 - **Private** (your thesis isn't public yet).
-- **Do not** check "Add a README", "Add .gitignore", or any license — the repo must be empty so we can push the Overleaf history into it.
+- **Do not** check "Add a README", "Add .gitignore", or any license, the repo must be empty so we can push the Overleaf history into it.
 - Copy the repo URL (HTTPS or SSH).
 
 ### 4. Clone on the server
