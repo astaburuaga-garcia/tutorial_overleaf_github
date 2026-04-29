@@ -1,175 +1,179 @@
 # Thesis writing workflow: Overleaf + server + GitHub
 
-A tutorial for setting up a thesis (or any LaTeX paper) writing workflow that combines:
+A tutorial for setting up a writing workflow for a thesis (or any LaTeX paper) using three tools:
 
-- **GitHub**: the **single source of truth**, canonical repo, version history
-- **A compute server** (e.g. ITB / Michaelis), where everything happens (R / Python, figure generation)
-- **Overleaf**: just for writing LaTeX in the browser
-
-The server syncs with GitHub via two helper scripts (one push, one pull). Overleaf occasionally syncs writing back to the server. This repo gives you the scripts and step-by-step setup.
+- **GitHub** is the canonical repo. Everything important ends up there.
+- **The compute server** (ITB / Michaelis) is where work happens: figures, code, analysis.
+- **Overleaf** is just for writing LaTeX in the browser.
 
 ![Workflow with GitHub as the single source of truth](docs/workflow.svg)
 
 ---
 
-## Why this workflow?
+## Where this tutorial lives
 
-| Place        | Role                                                          |
-| ------------ | ------------------------------------------------------------- |
-| **GitHub**   | **Single source of truth**: canonical repo, version history  |
-| **Server**   | Where everything happens, R / Python, figure generation      |
-| **Overleaf** | Just for writing LaTeX                                        |
+On michaelis: `/groups/nils/resources/tutorial_overleaf_github/`
 
-GitHub is canonical: anything important must end up there. The server is where you actually work, generate figures, run analysis, edit code. Overleaf is the comfortable LaTeX editor for the writing parts; you periodically bring its writing back to the server, and the server pushes everything onward to GitHub.
+This is the **shared, read-only** copy for the group. All the setup commands below copy files **out of** this directory **into** your own personal thesis directory (e.g. `~/thesis`).
+
+You don't edit anything inside `/groups/nils/resources/tutorial_overleaf_github/`. You just borrow files from it.
+
+---
+
+## Helper scripts at a glance
+
+Three scripts handle the three sync directions:
+
+| Script                          | What it does                                                | Direction                  |
+| ------------------------------- | ----------------------------------------------------------- | -------------------------- |
+| `./from_overleaf.sh`            | Pull the latest writing from Overleaf onto the server       | Overleaf, server          |
+| `./to_overleaf.sh "msg"`        | Push new figures/code from the server to Overleaf           | server, Overleaf          |
+| `./backup_to_github.sh "msg"`   | Commit + push the day's work to GitHub                      | server, GitHub            |
+
+Plus two progress helpers that run automatically inside `backup_to_github.sh`:
+
+| Script                | What it does                                          |
+| --------------------- | ----------------------------------------------------- |
+| `track_progress.sh`   | Log today's page count of `main.pdf` to `progress.csv` |
+| `plot_progress.R`     | Regenerate `figures/progress.pdf` from the log         |
+
+You don't run those two yourself. Just run `./backup_to_github.sh` once a day and the progress chart stays current.
 
 ---
 
 ## One-time setup
 
-### 1. Get the thesis template (or your own LaTeX project)
+Three phases: Overleaf side, GitHub side, server side. Do them in order.
 
-A copy of the **HU Berlin PhD thesis template** ([github.com/steinbrecht/template-phd-thesis](https://github.com/steinbrecht/template-phd-thesis)) is bundled in this repo at [`templates/phd-thesis/`](templates/phd-thesis/). Either:
+### A. Overleaf side
 
-- **Use the bundled copy** (recommended, same path on every machine):
+1. Pick how to start your project:
+   - **Use the bundled HU PhD template** (recommended). On the server:
+     ```bash
+     cd /groups/nils/resources/tutorial_overleaf_github/templates
+     zip -r /tmp/phd-thesis.zip phd-thesis/
+     ```
+     Then in Overleaf: `New Project, Upload Project, /tmp/phd-thesis.zip`. (Download the zip to your laptop first if Overleaf can't reach the server.)
+   - Or upload your own LaTeX project, or start from a blank Overleaf project.
+2. Set `main.tex` as the main document. **Compile** to confirm it works.
+3. Open `Menu, Git`. **Copy the URL**: `https://git.overleaf.com/<project-id>`.
+4. Generate an Overleaf Git token: `Account Settings, Git Integration, Generate token`. Save it in your password manager. (Overleaf Git access requires a Premium / institutional plan.)
 
-  ```bash
-  cp -r /groups/nils/resources/tutorial_overleaf_github/templates/phd-thesis ~/my-thesis
-  ```
+### B. GitHub side
 
-- **Or download a fresh copy** from `github.com/steinbrecht/template-phd-thesis` (`Code → Download ZIP`).
+1. Go to [github.com/new](https://github.com/new).
+2. Name the repo (e.g. `thesis`).
+3. **Private**.
+4. **Leave everything else unchecked**: no README, no .gitignore, no license. The repo must be empty.
+5. Copy the repo URL (SSH preferred: `git@github.com:youruser/thesis.git`).
+6. If you haven't already, add an SSH key to GitHub from the server. See [docs/03-authentication.md](docs/03-authentication.md).
 
-You can also bring your own LaTeX project, the rest of the workflow doesn't depend on this specific template.
+### C. Server side
 
-### 2. Upload to Overleaf
-
-At [latex.hu-berlin.de/project](https://latex.hu-berlin.de/project) (or [overleaf.com](https://overleaf.com)):
-
-`New Project → Upload Project` → set `main.tex` as the main document → compile to confirm.
-
-### 3. Get the Overleaf Git URL
-
-In Overleaf: `Menu → Git → copy URL`.
-
-> Overleaf's Git access requires a **Premium / institutional** plan. Charité / HU institutional accounts have it.
-
-### 4. Create an empty GitHub repo
-
-[github.com/new](https://github.com/new), make it **private**, do **not** initialise with a README (the repo must start empty).
-
-### 5. On the server, clone from Overleaf and add GitHub as a second remote
+SSH to the server, then:
 
 ```bash
+# 1. Clone the Overleaf project. This is the only time you pull from Overleaf via clone;
+#    after this, the server is the working copy.
+cd ~                                       # or wherever you want your thesis directory
 git clone <overleaf-url> thesis
 cd thesis
+
+# 2. Wire up the two remotes. Rename the default 'origin' (Overleaf) and add GitHub.
 git remote rename origin overleaf
 git remote add github <github-url>
-git remote -v   # sanity check, you should see both
-```
+git remote -v                              # sanity check, both remotes should be listed
 
-### 6. Add the helper scripts
-
-Copy all five helper scripts from this repo into your `thesis/` directory:
-
-```bash
-cp /groups/nils/resources/tutorial_overleaf_github/scripts/* .
+# 3. Copy the helper scripts and .gitignore template from the tutorial.
+cp /groups/nils/resources/tutorial_overleaf_github/scripts/*.sh .
+cp /groups/nils/resources/tutorial_overleaf_github/scripts/plot_progress.R .
+cp /groups/nils/resources/tutorial_overleaf_github/templates/.gitignore .
 chmod +x *.sh *.R
-```
 
-You'll have:
+# 4. Create the project folders.
+mkdir -p code figures
 
-- `from_overleaf.sh`, pull writing from Overleaf
-- `to_overleaf.sh`, push figures/code to Overleaf
-- `backup_to_github.sh`, daily GitHub backup (also updates the progress plot)
-- `track_progress.sh`, log today's page count to `progress.csv`
-- `plot_progress.R`, regenerate `figures/progress.pdf` from the log
-
-The progress log and plot update **automatically** every time you run `backup_to_github.sh`, so just keep running it once a day and you'll get a free progress chart over time.
-
-Requirements: `pdfinfo` (poppler) and `Rscript` (with `ggplot2` if you want the prettier version) on the server.
-
-### 7. Create the project structure
-
-```bash
-mkdir code figures
-cp /path/to/this/tutorial/templates/.gitignore .gitignore
-```
-
-Adjust `.gitignore` to your project (data file extensions, language-specific build artifacts, etc.).
-
-### 8. First push to GitHub
-
-```bash
+# 5. First push to GitHub.
 git push -u github main
 ```
 
-You'll be asked for credentials, see [docs/03-authentication.md](docs/03-authentication.md) for SSH key / personal access token setup.
+> If your default branch is `master` instead of `main`, replace `main` with `master` in the last command and inside the helper scripts.
+
+### Sanity check
+
+```bash
+./from_overleaf.sh        # should say "Server is up to date with Overleaf."
+git log --oneline -5      # you should see the Overleaf history
+git remote -v             # both 'overleaf' and 'github' listed
+```
+
+If all three look right, setup is done.
 
 ---
 
 ## Daily routine
 
-### Start of the day, pull what you wrote in Overleaf last night
-
-```bash
-./from_overleaf.sh
+```
+morning   ./from_overleaf.sh                          # pull last night's writing
+work      Rscript code/<something>.R                  # generate figures, write code
+mid-day   ./to_overleaf.sh "Add volcano plot"         # push figures to Overleaf
+          (write in Overleaf)
+          ./from_overleaf.sh                          # pull writing back to server
+          (continue work)
+end-day   ./backup_to_github.sh "Day's work: ch3"     # backup to GitHub + update progress chart
 ```
 
-### After generating a new figure on the server
+The simple rule: **edit `.tex` only in Overleaf, edit code/figures only on the server.** That way you can't get merge conflicts on the same file.
 
-```bash
-./to_overleaf.sh "Add volcano plot for chapter 3"
-```
-
-Then switch to Overleaf, `\includegraphics{figures/volcano.pdf}`, write your section, save.
-
-### Back on the server to continue analysis
-
-```bash
-./from_overleaf.sh
-```
-
-### End of day, backup to GitHub (also updates progress chart)
-
-```bash
-./backup_to_github.sh "Day's work: chapter 3 figures and writing"
-```
-
-This automatically logs today's page count and regenerates `figures/progress.pdf` before the push, so the progress chart stays current with no extra effort.
+For more detail and a typical-day timeline, see [docs/02-daily-workflow.md](docs/02-daily-workflow.md).
 
 ---
 
-## Folder structure
+## Folder structure (your thesis directory after setup)
 
 ```
 thesis/
-├── main.tex, chapters/, references.bib    ← from the template
-├── figures/                               ← script outputs (.pdf, .png)
-├── code/                                  ← R / Python scripts
-├── data/                                  ← gitignore'd, never committed
+├── main.tex, chapters/, references.bib    (from the template)
+├── figures/                               (script outputs, .pdf, .png)
+├── code/                                  (R / Python scripts)
+├── data/                                  (gitignored, never committed)
 ├── from_overleaf.sh
 ├── to_overleaf.sh
 ├── backup_to_github.sh
+├── track_progress.sh
+├── plot_progress.R
+├── progress.csv                           (auto-generated by track_progress.sh)
 └── .gitignore
 ```
 
 ---
 
-## What you need before Thursday's session
+## Prerequisites
 
-- [ ] **GitHub account**: sign up at [github.com](https://github.com) if needed
-- [ ] **Server access**: laptop set up to SSH into the ITB / Michaelis server
-- [ ] **GitHub authentication**: personal access token or SSH key configured (see [docs/03-authentication.md](docs/03-authentication.md))
-- [ ] **Overleaf account** with Git access (institutional login)
+- GitHub account ([github.com](https://github.com))
+- SSH access to michaelis (or another compute server)
+- An SSH key or personal-access-token configured for GitHub. See [docs/03-authentication.md](docs/03-authentication.md).
+- Overleaf account on a Premium / institutional plan (Charité, HU). Git access is **not** available on free accounts.
+- `pdfinfo` (poppler) and `Rscript` installed on the server, only needed for the progress chart.
+
+---
+
+## Detailed documentation
+
+- [docs/01-setup.md](docs/01-setup.md): the same setup with extra detail and gotchas.
+- [docs/02-daily-workflow.md](docs/02-daily-workflow.md): each script with examples.
+- [docs/03-authentication.md](docs/03-authentication.md): SSH keys, GitHub PAT, Overleaf Git token.
+- [docs/04-troubleshooting.md](docs/04-troubleshooting.md): merge conflicts, default branch, common errors.
+- [docs/OnePager.md](docs/OnePager.md): printable one-page summary.
 
 ---
 
 ## Repo contents
 
-- [`scripts/`](scripts/), the helper scripts (Overleaf↔server sync, GitHub backup, progress tracking)
-- [`templates/phd-thesis/`](templates/phd-thesis/), bundled HU Berlin PhD thesis template (steinbrecht)
-- [`templates/.gitignore`](templates/.gitignore), starter `.gitignore` for LaTeX + R + Python
-- [`docs/`](docs/), setup, daily-workflow, authentication, and troubleshooting guides
-- [`docs/OnePager.md`](docs/OnePager.md), printable one-page summary
+- `scripts/`: the helper scripts.
+- `templates/phd-thesis/`: bundled HU Berlin PhD thesis template (steinbrecht).
+- `templates/.gitignore`: starter `.gitignore` for LaTeX + R + Python.
+- `docs/`: detailed guides and the workflow diagram.
 
 ---
 
