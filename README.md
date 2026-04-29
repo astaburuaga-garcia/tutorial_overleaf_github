@@ -41,12 +41,14 @@ Three phases: Overleaf side, GitHub side, server side. Do them in order.
 > If you've never used the HU Overleaf, see the official setup guide first: [HU Digital Learning, Overleaf (HDL3)](https://www.digitale-lehre.hu-berlin.de/en/hu-digital-learning-and-teaching-landscape-hdl3-1/overleaf/hdl3-overleaf).
 
 1. Pick how to start your project:
-   - **Use the bundled HU PhD template** (recommended). On the server:
-     ```bash
-     cd /groups/nils/resources/tutorial_overleaf_github/templates
-     zip -r /tmp/phd-thesis.zip phd-thesis/
-     ```
-     Then in Overleaf: `New Project, Upload Project, /tmp/phd-thesis.zip`. (Download the zip to your laptop first if Overleaf can't reach the server.)
+   - **Use the bundled HU PhD template** (recommended).
+     1. On the ITB server, zip the template:
+        ```bash
+        cd /groups/nils/resources/tutorial_overleaf_github/templates
+        zip -r ~/phd-thesis.zip phd-thesis/
+        ```
+     2. Copy the zip from the server to your laptop (e.g. `scp server:~/phd-thesis.zip .`). Overleaf cannot reach the ITB server directly, so the upload always goes through your laptop.
+     3. In Overleaf: `New Project, Upload Project`, select `phd-thesis.zip` from your laptop.
    - Or upload your own LaTeX project, or start from a blank Overleaf project.
 2. Set `main.tex` as the main document. **Compile** to confirm it works.
 3. Open `Menu, Git`. **Copy the URL**: `https://git.overleaf.com/<project-id>`.
