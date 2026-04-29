@@ -7,7 +7,11 @@
 
 args <- commandArgs(trailingOnly = TRUE)
 csv_path <- if (length(args) >= 1) args[1] else "progress.csv"
-out_dir  <- if (length(args) >= 2) args[2] else "figures"
+out_arg  <- if (length(args) >= 2) args[2] else "figures"
+
+# Back-compat: if someone passes a .pdf path, treat its parent as the dir.
+out_dir <- if (grepl("\\.pdf$", out_arg)) dirname(out_arg) else out_arg
+if (out_dir == "" || out_dir == ".") out_dir <- "figures"
 
 if (!file.exists(csv_path)) {
   stop("Log file not found: ", csv_path, ". Run ./track_progress.sh first.")
@@ -26,11 +30,11 @@ draw <- function(device_open, device_close) {
   if (requireNamespace("ggplot2", quietly = TRUE)) {
     library(ggplot2)
     p <- ggplot(dat, aes(x = date, y = pages)) +
-      geom_line(linewidth = 0.6, colour = "#2c3e50") +
       geom_point(size = 1.6, colour = "#2c3e50") +
       labs(x = NULL, y = "Pages", title = "Thesis writing progress") +
       theme_minimal(base_size = 12) +
       theme(panel.grid.minor = element_blank())
+    if (nrow(dat) > 1) p <- p + geom_line(linewidth = 0.6, colour = "#2c3e50")
     print(p)
   } else {
     par(mar = c(4, 4, 2, 1))
