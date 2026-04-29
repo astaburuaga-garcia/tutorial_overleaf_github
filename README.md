@@ -74,12 +74,7 @@ cd ~                                       # or wherever you want your thesis di
 git clone <overleaf-url> thesis
 cd thesis
 
-# 2. Make sure the default branch is named 'main'. Overleaf clones often come as 'master',
-#    and the helper scripts assume 'main'. This rename is a no-op if you're already on main.
-git branch -m main 2>/dev/null || true
-git branch                                 # sanity check: should show "* main"
-
-# 3. Wire up the two remotes. The commands below are idempotent: they work whether
+# 2. Wire up the two remotes. The commands below are idempotent: they work whether
 #    you cloned from Overleaf, cloned from GitHub, or ran `git init`. Use SSH for
 #    GitHub (NOT https; https will prompt for a password and fail).
 git remote rename origin overleaf 2>/dev/null || true   # rename only if origin exists
@@ -88,18 +83,21 @@ git remote add github   git@github.com:<youruser>/<repo-name>.git 2>/dev/null \
   || git remote set-url github git@github.com:<youruser>/<repo-name>.git
 git remote -v                              # sanity check: github should start with git@github.com:
 
-# 4. Copy the helper scripts and .gitignore template from the tutorial.
+# 3. Copy the helper scripts and .gitignore template from the tutorial.
 cp /groups/nils/resources/tutorial_overleaf_github/scripts/*.sh .
 cp /groups/nils/resources/tutorial_overleaf_github/scripts/plot_progress.R .
 cp /groups/nils/resources/tutorial_overleaf_github/templates/.gitignore .
 chmod +x *.sh *.R
 
-# 5. Create the project folders.
+# 4. Create the project folders.
 mkdir -p code figures
 
-# 6. First push to GitHub.
-git push -u github main
+# 5. First push to GitHub. Branch name is 'master' (Overleaf clones come as master,
+#    and the helper scripts use master throughout, so we match that everywhere).
+git push -u github master
 ```
+
+> **Branch name:** the whole workflow uses `master` because Overleaf forces `master`. Don't rename to `main` — it just creates a mismatch with the Overleaf remote.
 
 ### Sanity check
 

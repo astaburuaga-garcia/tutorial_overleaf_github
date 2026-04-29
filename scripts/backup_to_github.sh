@@ -51,6 +51,6 @@ else
   run git commit -m "$MESSAGE"
 fi
 
-run git push github main
+run git push github master
 
 echo "Done. Day's work backed up to GitHub."

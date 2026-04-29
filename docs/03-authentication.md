@@ -35,7 +35,7 @@ When you create the GitHub remote, use the **SSH URL** (`git@github.com:user/rep
 git remote -v                                                      # see current URL
 git remote set-url github git@github.com:<youruser>/<repo>.git     # swap to SSH
 git remote -v                                                      # confirm: starts with git@github.com:
-git push -u github main                                            # no password prompt now
+git push -u github master                                          # no password prompt now
 ```
 
 ### Alternative: personal access token
@@ -45,7 +45,7 @@ If you must use HTTPS:
 1. GitHub → `Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token`.
 2. Scope: only the thesis repo. Permission: **Contents: Read and write**.
 3. Copy the token.
-4. First `git push github main` → username = your GitHub username, password = the token.
+4. First `git push github master` → username = your GitHub username, password = the token.
 5. Cache it: `git config --global credential.helper store` (saves plaintext in `~/.git-credentials`) or use the OS keychain helper.
 
 ## Overleaf: Git token
@@ -53,7 +53,7 @@ If you must use HTTPS:
 Overleaf only supports HTTPS + token (no SSH).
 
 1. Overleaf → `Account Settings → Git Integration → Generate token`.
-2. First `git pull overleaf main` or `git push overleaf main` → username = your Overleaf email, password = the token.
+2. First `git pull overleaf master` or `git push overleaf master` → username = your Overleaf email, password = the token.
 3. Same caching options as GitHub above.
 
 ## If a push asks for credentials every time

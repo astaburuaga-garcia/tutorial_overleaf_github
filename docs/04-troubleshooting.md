@@ -6,7 +6,7 @@ GitHub stopped accepting account passwords for git in 2021. The "password" it's 
 
 ```bash
 git remote set-url github git@github.com:<youruser>/<repo>.git
-git push -u github main
+git push -u github master
 ```
 
 You need an SSH key on GitHub for this. See [03-authentication.md](03-authentication.md).
@@ -28,21 +28,21 @@ git remote add github   git@github.com:<youruser>/<repo>.git
 
 The setup section in the README uses idempotent commands that handle this automatically.
 
-## `fatal: couldn't find remote ref main` (when pulling from Overleaf)
+## `fatal: couldn't find remote ref main`
 
-Overleaf uses `master`, not `main`, as its branch name. The helper scripts in this tutorial already account for that (`from_overleaf.sh` pulls `overleaf master`, `to_overleaf.sh` pushes `main:master`). If you have an older copy of the scripts, refresh them from this tutorial:
+This whole tutorial uses `master`, not `main`, because Overleaf forces `master` and we match that on the GitHub side too. If you see this error, you renamed your local branch to `main` somewhere along the way. Two fixes:
 
 ```bash
+# (a) Rename your local branch back to master:
+git branch -m main master
+git push -u github master
+
+# (b) Or refresh the helper scripts from this tutorial (which all use master):
 cp /groups/nils/resources/tutorial_overleaf_github/scripts/*.sh .
 chmod +x *.sh
 ```
 
-Manual one-shot fix without the scripts:
-
-```bash
-git pull overleaf master           # pull Overleaf's master into your local main
-git push overleaf main:master      # push your local main to Overleaf's master
-```
+If your GitHub repo is already configured with `main` as its default branch and you don't want to migrate, you can keep `main` locally and edit the three helper scripts to push/pull `main` to/from GitHub, while keeping `master` for Overleaf via `git push overleaf main:master`.
 
 ## "Authentication failed"
 
@@ -63,7 +63,7 @@ Open the file. You'll see chunks like:
 your version on the server
 =======
 the Overleaf version
->>>>>>> overleaf/main
+>>>>>>> overleaf/master
 ```
 
 Pick the right text, delete the `<<<<<<<`, `=======`, `>>>>>>>` markers, save, then:
@@ -88,24 +88,6 @@ Overleaf moved ahead of your server copy. Pull first:
 ## Overleaf doesn't show my new figure
 
 After `./to_overleaf.sh`, Overleaf needs to **pull**. Click the Git icon in Overleaf → Pull. Or wait a few minutes, Overleaf auto-pulls. Then recompile.
-
-## Default branch is `master`, not `main`
-
-Older repos use `master`. Either:
-
-- **Rename to `main`** (cleanest):
-
-  ```bash
-  git branch -m master main
-  git push -u github main
-  git push -u overleaf main
-  ```
-
-- **Or edit the helper scripts** to use `master`:
-
-  ```bash
-  sed -i 's/main/master/g' *.sh
-  ```
 
 ## I committed a big data file by mistake
 
