@@ -8,6 +8,8 @@ A tutorial for setting up a thesis (or any LaTeX paper) writing workflow that co
 
 The three live in sync via Git. This repo gives you the helper scripts and step-by-step setup.
 
+![Workflow with GitHub as the single source of truth](docs/workflow.svg)
+
 ---
 
 ## Why this workflow?
@@ -174,3 +176,10 @@ thesis/
 ## Questions?
 
 Open an issue on this repo or ask Rosario directly.
+
+---
+
+## Credits
+
+- **LaTeX template**: the bundled [`templates/phd-thesis/`](templates/phd-thesis/) is the **HU Berlin PhD thesis template by steinbrecht** — [github.com/steinbrecht/template-phd-thesis](https://github.com/steinbrecht/template-phd-thesis). Used and redistributed unchanged. Please credit the original repository when you reuse the template.
+- **Helper scripts and tutorial**: Rosario Astaburuaga-García.
