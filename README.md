@@ -26,11 +26,17 @@ Overleaf and the server form a **live working pair** that sync constantly during
 
 ### 1. Get the thesis template (or your own LaTeX project)
 
-Download a template, e.g.:
+A copy of the **HU Berlin PhD thesis template** ([github.com/steinbrecht/template-phd-thesis](https://github.com/steinbrecht/template-phd-thesis)) is bundled in this repo at [`templates/phd-thesis/`](templates/phd-thesis/). Either:
 
-```
-github.com/steinbrecht/template-phd-thesis  →  Code → Download ZIP
-```
+- **Use the bundled copy** (recommended — same path on every machine):
+
+  ```bash
+  cp -r /groups/nils/resources/tutorial_overleaf_github/templates/phd-thesis ~/my-thesis
+  ```
+
+- **Or download a fresh copy** from `github.com/steinbrecht/template-phd-thesis` (`Code → Download ZIP`).
+
+You can also bring your own LaTeX project — the rest of the workflow doesn't depend on this specific template.
 
 ### 2. Upload to Overleaf
 
@@ -143,6 +149,7 @@ thesis/
 ## Repo contents
 
 - [`scripts/`](scripts/) — the three helper scripts
+- [`templates/phd-thesis/`](templates/phd-thesis/) — bundled HU Berlin PhD thesis template (steinbrecht)
 - [`templates/.gitignore`](templates/.gitignore) — starter `.gitignore` for LaTeX + R + Python
 - [`docs/`](docs/) — setup, daily-workflow, authentication, and troubleshooting guides
 - [`docs/OnePager.md`](docs/OnePager.md) — printable one-page summary

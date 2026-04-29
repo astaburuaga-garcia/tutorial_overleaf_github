@@ -1,0 +1,42 @@
+\input{preamble}
+\begin{document}
+    % for layout setup, remove later
+    % \layout
+    
+    \frontmatter    % --- roman numerals numbering -----------------
+    \include{chapters/00_cover_sheet}
+    \include{chapters/01a_abstract}
+    \include{chapters/01b_zusammenfassung}
+    \include{chapters/02_acronyms}
+    \tableofcontents
+    
+    \mainmatter     % --- starts actual page numbering -----------------
+    \include{chapters/03_introduction}
+    \include{chapters/04_Main1}
+    \include{chapters/05_Main2}
+    % \include{chapters/06_Main3}
+    % \include{chapters/07_Main4}
+    % \include{chapters/08_conclusion}
+    % I decided to exclude materials and methods section, and used the Appendix
+    
+    \appendix % Don't use \appendix after \backmatter
+    \include{chapters/09_Appendix}
+    
+    \backmatter     % --- use for non-main text --------------------
+    \include{chapters/10_bibliography}
+    \include{chapters/11_list_of_software}
+    
+    \chapter{List of Figures}
+    \makeatletter
+    \@starttoc{lof}% Prints List of Figures
+    \makeatother
+
+    \chapter{List of Tables}
+    \makeatletter
+    \@starttoc{lot}% Prints List of Tables
+    \makeatother
+
+    \include{chapters/12_widmung}
+    \include{chapters/13_selbstaendigkeitserklaerung}
+    
+\end{document}

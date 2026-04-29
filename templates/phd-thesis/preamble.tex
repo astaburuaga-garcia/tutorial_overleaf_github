@@ -1,0 +1,294 @@
+
+
+% ***************************************************************************
+% LAYOUT
+% *********************************************************************
+
+
+% Scr Book nice layout
+\documentclass[11pt,english,a4page,
+                twoside, openright,
+                mpinclude=false,
+                footinclude,headinclude,    % maybe comment out
+                parskip=half-,
+				bibliography=totoc,	% maybe you need to change this
+                titlepage=firstiscover,
+				]{scrbook}
+
+\PassOptionsToPackage{
+    % drafting,   % puts date on every page, useful for writing --> uncomment this at the end
+    eulerchapternumbers, 
+    dottedtoc,      % consider not dotting
+    pdfspacing, 
+    floatperchapter,  % activates numbering per chapter for all floats such as figures, tables, and listings
+    beramono,   % loads Bera Mono as typewriter font
+    % eulermath,  % use euler fonts for Math i.e. equations
+    % parts,      % use this option if you use Part divisions in your document
+    % style=classicthesis,  % default style
+}{classicthesis}        
+\usepackage{classicthesis}   
+
+% my old geometry setting
+\areaset[current]{\dimexpr\textwidth+\marginparwidth+\marginparsep}{820pt}                  % {336pt}{750pt} standard values
+
+\KOMAoptions{
+    BCOR=9mm, % sets binding correction, i.e. shifts odd pages to right, even pages to left
+    DIV=14, % calculates margins based on font, higher for smaller margin
+}
+
+
+
+
+% % ********************************************************************
+% % DEFINE COLORS
+% % *********************************************************************
+% blue of HU
+\definecolor{hublue}{RGB}{0,75,136}
+% my nice colors from SLAM project
+\definecolor{bluedark}{HTML}{1863a1}
+\definecolor{bluelight}{HTML}{8eb0c8}
+\definecolor{gold}{HTML}{dba146}
+\definecolor{red}{HTML}{D04D2E}
+\definecolor{seagreen}{HTML}{388659}
+
+% % colors already defined in classicthesis.sty
+% \definecolor{Maroon}{cmyk}{0, 0.87, 0.68, 0.32}   % I use this for chapter numbers
+% \definecolor{RoyalBlue}{cmyk}{1, 0.50, 0, 0}
+% \definecolor{halfgray}{gray}{0.55} % default for chapter numbers
+% \definecolor{webgreen}{rgb}{0,.5,0}
+% \definecolor{webbrown}{rgb}{.6,0,0}
+
+
+% % ********************************************************************************************
+% % GENERAL PACKAGES
+% % ********************************************************************************************
+% % Symbols, fonts and language
+% % my stuff
+\usepackage[T5, T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp} % fix warning with missing font shapes
+\usepackage{scrhack} % fix warnings when using KOMA with listings package        
+\usepackage{xspace} % to get the spacing after macros right  
+\usepackage{mparhack} % get marginpar right
+\usepackage{setspace}
+\usepackage[vietnamese, ngerman, main=english]{babel}
+% \usepackage[parfill]{parskip}  % no indent after line break, as is more common in Germany
+\usepackage[withpage, printonlyused]{acronym}  % nice macros for handling all acronyms in the thesis
+\renewcommand*{\aclabelfont}[1]{\acsfont{#1}}   % change abbreviation font to default font for acronyms page
+\usepackage{soul}   % wider spacing between letters
+\sodef\so{}{.2em}{0.7em}{0.5em}     % first empty, ssecond changes inner spacing, third changes spacing between words, fourth i don't know
+\sodef\sosmall{}{.06em}{0.37em}{0.5em}     % slight increase in spacing between
+\usepackage{epigraph} % for quotes at beginning of a chapter for example
+\usepackage{lipsum,kantlipsum}  % Generates dummy text
+% hyphenation
+\hyphenation{mRNA}      % prevents the word from being broken/hyphenated
+\hyphenation{mRNAs}
+
+
+% % Figures
+\usepackage{caption}
+\usepackage{ragged2e} % to justify align text, used for figure legends
+\captionsetup{font=small, justification=raggedright, singlelinecheck=false} % format=hang,
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{subfig}
+\usepackage{float}
+
+% Math
+\usepackage{amsmath} % math symbols
+\usepackage{amsfonts} % gives \mathbb
+\usepackage{mathtools}  % for := sgin with \coloneq
+\DeclareMathOperator{\R}{\mathbb{R}}
+\usepackage{siunitx}    % for very handy number formatting
+\DeclareSIUnit{\kb}{kb}   % define kilobase as unit
+\DeclareSIUnit{\molar}{M}   % define Molar as unit
+\DeclareSIUnit\litre{l}     % make litre be lowercase "l" as it more standard in biomedicine
+
+% Pseudo code
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Graphics and colors
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+
+
+
+%********************************************************************************************
+% BIBLIOGRAPHY, HYPERSETUP AND LINK COLORS
+% % ********************************************************************************************
+\PassOptionsToPackage{%
+    backend=biber, %instead of bibtex
+	style=phys, %style: Title with quotation marks, Volume in Bold
+	%style=authoryear, %Stefan used this
+	defernumbers=true,
+    sorting=none, % name, year, title
+    maxbibnames=6, % default: 3, et al.
+    % url=false, doi=false, isbn=false, eprint=false, % from Stefan
+}{biblatex}
+\usepackage{biblatex}
+\usepackage{csquotes} % biblatex wants this
+\addbibresource{references.bib}
+
+
+% For Edoc server
+\usepackage[a-1b]{pdfx} % WARNING: this seems to clash with hyperref package!
+% pdfx will auto-load hyperref. So instead of leading hyperref one more time (raises an option clash error), we just configure the already loaded pachakge
+% https://de.comp.text.tex.narkive.com/xeM2p39s/pdfx-und-hyperref
+\hypersetup{
+	colorlinks = true,
+	% bookmarksnumbered = true,  % Solves A8
+    linkcolor = hublue,     % changes text color in TOC, and acronym color, set black
+	% linkcolor = black,     % changes text color in TOC, and acronym color, set black
+    urlcolor  = hublue,  % sets URL color (no Refs); black,
+    % urlcolor  = bluedark,  % sets URL color, mainly seen in Bibliography (no Fig. refs); black,
+	citecolor = hublue,     % really only changes citation color; RoyalBlue, seagreen
+	anchorcolor = black,   % dont know what this does
+    linktocpage=true,   % makes chapters in TOC Maroon
+}
+
+% % ********************************************************************************************
+% % LAYOUT (CHAPTER TITLE etc.)
+% % ********************************************************************************************
+% makes chapter number red (or rather maroon)
+\titleformat{\chapter}[display]%
+    {\relax}{\mbox{}\oldmarginpar{\vspace*{-3\baselineskip}\color{Maroon}\chapterNumber\thechapter}}{0pt}%
+    {\large\raggedright\spacedallcaps}[\normalsize\vspace*{.8\baselineskip}\titlerule]% 
+% set style for sections
+\titleformat{\section}%
+{\relax}{\textsc{\large\MakeTextLowercase{\thesection}}}{1em}{\large\spacedlowsmallcaps}%
+% subsections style
+\titleformat{\subsection}{\relax}{\textsc{\MakeTextLowercase{\thesubsection}}}{1em}{\normalsize\itshape}%  
+% make chapter tiltes in TOC maroon
+\renewcommand\cftchapfont{\large\normalfont\color{Maroon}}
+
+% for layout setup, remove later
+\usepackage{layout}
+% \usepackage{layouts}
+% \usepackage{showframe}
+
+% this makes a command to adjust margins --> used for outer cover page
+\newenvironment{changemargin}[2]{%
+  \begin{list}{}{%
+    \setlength{\topsep}{0pt}%
+    \setlength{\leftmargin}{#1}%
+    \setlength{\rightmargin}{#2}%
+    \setlength{\listparindent}{\parindent}%
+    \setlength{\itemindent}{\parindent}%
+    \setlength{\parsep}{\parskip}%
+  }%
+  \item[]}{\end{list}}
+
+% ------- LINE SPACING --------------
+\usepackage{setspace}       % to change line spacing
+\setstretch{1.2}            % allows things like underlining in printed version
+
+% --------- PARAGRAPH SPACING ----------
+% --- TYPE I: Indentation with minimal vertical spacing
+\setlength{\parindent}{1.5em} % Set paragraph indentation to 1.5em
+\setlength{\parskip}{1pt}     % Minimal vertical spacing of 1pt between paragraphs
+
+% % --- TYPE II: No indentation with significant vertical spacing
+% % paragraph indentation and other stuff like that
+% \setlength{\parindent}{0pt}      % sets indentation
+% % extra vertical space is already set above with parskip=half- in \documentsetup{}
+% \setlength{\parskip}{0.5ex}        % sets extra vertical space between paragraphs
+
+
+
+
+
+
+% ****************************************************************************
+% CUSTOM COMMANDS MAINLY FOR EQUATIONS
+% ****************************************************************************
+\usepackage{accents}
+% make custom dot for time derivatives that is bigger than default \dot
+\newcommand*{\dt}[1]{%
+  \accentset{\mbox{\large\bfseries .}}{#1}} % bigger than normal \dot
+\newcommand*{\ddt}[1]{%
+  \accentset{\mbox{\large .\hspace{-0.25ex}.}}{#1}}
+
+
+% command to adjust space betwwen rows in tables from booktabs
+% (booktabs package already loaded with classicthesis.sty)
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+% % changing thickness of horizontal rules in tables
+% \setlength{\heavyrulewidth}{}
+% \setlength{\lightrulewidth}{}
+
+% command for special font/typesetting of software package names
+\newcommand{\pkg}[1]{\texttt{#1}}
+
+
+% ********************************************************************
+% Setup autoreferences
+% ********************************************************************
+% There are some issues regarding autorefnames
+% http://www.ureader.de/msg/136221647.aspx
+% http://www.tex.ac.uk/cgi-bin/texfaq2html?label=latexwords
+% you have to redefine the makros for the 
+% language you use, e.g., american, ngerman
+% (as chosen when loading babel/AtBeginDocument)
+% ********************************************************************
+\makeatletter
+\@ifpackageloaded{babel}%
+    {%
+       \addto\extrasamerican{%
+			\renewcommand*{\figureautorefname}{Figure}%
+			\renewcommand*{\tableautorefname}{Table}%
+			\renewcommand*{\partautorefname}{Part}%
+			\renewcommand*{\chapterautorefname}{Chapter}%
+			\renewcommand*{\sectionautorefname}{Section}%
+			\renewcommand*{\subsectionautorefname}{Section}%
+			\renewcommand*{\subsubsectionautorefname}{Section}%     
+                }%
+       \addto\extrasngerman{% 
+			\renewcommand*{\paragraphautorefname}{Absatz}%
+			\renewcommand*{\subparagraphautorefname}{Unterabsatz}%
+			\renewcommand*{\footnoteautorefname}{Fu\"snote}%
+			\renewcommand*{\FancyVerbLineautorefname}{Zeile}%
+			\renewcommand*{\theoremautorefname}{Theorem}%
+			\renewcommand*{\appendixautorefname}{Anhang}%
+			\renewcommand*{\equationautorefname}{Gleichung}%        
+			\renewcommand*{\itemautorefname}{Punkt}%
+                }%  
+            % Fix to getting autorefs for subfigures right (thanks to Belinda Vogt for changing the definition)
+            \providecommand{\subfigureautorefname}{\figureautorefname}%             
+    }{\relax}
+\makeatother
+
+% **** ACRONYM CUTOMIZATION ********************************
+% adjust colour of acronyms in-text to black
+\makeatletter
+\AtBeginDocument{%
+  \renewcommand*{\AC@hyperlink}[2]{%
+    \begingroup
+      \hypersetup{hidelinks}%
+      \hyperlink{#1}{#2}%
+    \endgroup
+  }%
+}
+\makeatother
+
+
+% ****** EPIGRAPH CUSTOMIZATION *****************************
+% % change default, so that quotes are italic and whitespace is added after quote
+\usepackage{etoolbox}
+\makeatletter
+\newlength\epitextskip
+\pretocmd{\@epitext}{\em}{}{}
+\apptocmd{\@epitext}{\em}{}{}
+\patchcmd{\epigraph}{\@epitext{#1}\\}{\@epitext{#1}\\[\epitextskip]}{}{}
+% % source is preceeded by short line (works, but overleaf complains)
+\renewcommand{\@episource}[1]{%
+    \begin{minipage}{\epigraphwidth} \begin{\sourceflush} ---#1 \end{\sourceflush}
+    \end{minipage}
+    }
+\makeatother
+
+\setlength\epigraphrule{0pt}    % remove black lines between quote and author
+\setlength\epitextskip{1ex}     % add vspace below quote and abov author
+\setlength\epigraphwidth{.5\textwidth}  % set width
+\setlength\beforeepigraphskip{0.\baselineskip}  % change vspace above epigraph; 

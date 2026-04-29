@@ -15,7 +15,15 @@ This walks through the same steps as the README, with screenshots-friendly detai
 
 Pick **one** of:
 
-- **From a template**: clone or download a thesis template (e.g. `github.com/steinbrecht/template-phd-thesis`) and upload via `New Project → Upload Project`.
+- **From the bundled HU PhD template** (`templates/phd-thesis/` in this repo): zip the folder and upload via Overleaf `New Project → Upload Project`.
+
+  ```bash
+  cd /groups/nils/resources/tutorial_overleaf_github/templates
+  zip -r /tmp/phd-thesis.zip phd-thesis/
+  # then upload /tmp/phd-thesis.zip to Overleaf
+  ```
+
+- **From a different template**: download or clone any LaTeX template and upload via `New Project → Upload Project`.
 - **From scratch**: `New Project → Blank Project`.
 - **Already have one**: skip this step.
 

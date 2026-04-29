@@ -1,0 +1,59 @@
+\chapter[Introduction]{Introduction}
+\label{chap:introduction}
+
+\epigraph{If you spend too much time thinking about a thing, you'll never get it done.}{Bruce Lee}
+
+\noindent A short paragraph that introduces the chapter and specifies what work you did in the chapter and what work your colleagues did. 
+
+
+
+
+% ************************************************************************
+% ------------- SECTION 1 ------------------------------------------------
+% ************************************************************************
+\section[Explainer]{Explaining section that shows you how to use some things}
+
+If you want to write a number that quantifies something like number of genes, use the package \texttt{siunitx}. It's great. For example the numbers \num{15936} and \num{159236} are formatted with a space for readability. Also, you can use it to format quantities with units correctly, such as \qty{15}{\min}. They can be used in equatino as well, e.g. $n = \num{11111}$. In general, numbers should be used in Math mode, e.g. $5$ and only if it clearly is a text number, such as on the 5th of December, it should be used within text mode.
+
+% subsection without numbering (*)
+\subsection*{Unnumbered subsection}
+
+Cite stuff with \texttt{\textbackslash{}cite}, e.g. like so: "Stenbrecht et al. found something out~\cite{steinbrecht_2024}". Refer to your figures with \texttt{\textbackslash{}ref}, like so: "This and this, see Fig.~\ref{fig:illustration_life_cycle}". In both cases, use the tilde symbol~"$\sim$" to make sure there is no line break between the word and the reference. 
+
+Introduce an acronym with \texttt{\textbackslash{}ac}, e.g. "\ac{ER}" or if you want the plural use \texttt{\textbackslash{}acp}, e.g. "\acp{mESC}", but you need to define the  plural version as well then in the acronyms chapter.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{hu_siegel_blau.pdf}
+    % the square brackets are the short caption used in the List of Figures
+    \caption[Concise description of figure.]{
+    \textbf{Concise description of figure. }
+    But there is always more text to explain stuff. Figure legends and stuff.
+    }
+    \label{fig:illustration_life_cycle}
+\end{figure}
+
+
+% normal subsection with numbering
+\subsection{Numbered subsection}
+
+\kant[15]
+
+
+% ************************************************************************
+% ------------- SECTION 2 ------------------------------------------------
+% ************************************************************************
+% the text in square brackets is used in the top line of the page that shows in which section and chapter you are (if the text is too long it goes over the line and you don't want that)
+\section[Short title]{A long section title that is a bit too long but dont worry about it right now}
+
+The central dogma of molecular biology describes how genetic sequence information can flow between nucleic acids and proteins, stating that information transfer can occur from nucleic acid to nucleic acid or nucleic acid to protein, but not from protein to protein or from protein back to nucleic acid~\cite{crick_1958}. The dogma serves as a foundation for understanding cellular processes. Often, it is reductively summarized as "DNA makes RNA, and RNA makes protein". 
+
+
+
+
+% ************************************************************************
+% ------------- SECTION 3 ------------------------------------------------
+% ************************************************************************
+\section[blub blib]{A section title}
+
+\kant[7]
