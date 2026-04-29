@@ -28,7 +28,7 @@ echo "=== Updating thesis progress ==="
 if [ -f main.pdf ] && command -v pdfinfo >/dev/null 2>&1; then
   run ./track_progress.sh main.pdf
   if command -v Rscript >/dev/null 2>&1; then
-    run Rscript plot_progress.R progress.csv figures/progress.pdf
+    run Rscript plot_progress.R progress.csv figures
   else
     echo "(Rscript not found, skipping plot regeneration)"
     echo ""
@@ -36,6 +36,11 @@ if [ -f main.pdf ] && command -v pdfinfo >/dev/null 2>&1; then
 else
   echo "(main.pdf or pdfinfo not available, skipping progress tracking)"
   echo ""
+fi
+
+# --- Refresh the README dashboard (progress block + chapters list) ---
+if [ -f update_readme.sh ]; then
+  run ./update_readme.sh
 fi
 
 echo "=== Backing up to GitHub ==="
