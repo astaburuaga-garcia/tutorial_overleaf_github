@@ -2,11 +2,11 @@
 
 A tutorial for setting up a thesis (or any LaTeX paper) writing workflow that combines:
 
-- **Overleaf** — for writing LaTeX collaboratively in the browser
-- **A compute server** (e.g. ITB / Michaelis) — for generating figures from data
-- **GitHub** — for daily version-control backups
+- **GitHub** — the **single source of truth**, canonical repo, version history
+- **A compute server** (e.g. ITB / Michaelis) — where everything happens (R / Python, figure generation)
+- **Overleaf** — just for writing LaTeX in the browser
 
-The three live in sync via Git. This repo gives you the helper scripts and step-by-step setup.
+The server syncs with GitHub via two helper scripts (one push, one pull). Overleaf occasionally syncs writing back to the server. This repo gives you the scripts and step-by-step setup.
 
 ![Workflow with GitHub as the single source of truth](docs/workflow.svg)
 
@@ -14,13 +14,13 @@ The three live in sync via Git. This repo gives you the helper scripts and step-
 
 ## Why this workflow?
 
-| Place        | Role                                            |
-| ------------ | ----------------------------------------------- |
-| **Overleaf** | Live writing — LaTeX, references, compilation  |
-| **Server**   | Live figure generation — R / Python scripts     |
-| **GitHub**   | Daily backup — clean version history            |
+| Place        | Role                                                          |
+| ------------ | ------------------------------------------------------------- |
+| **GitHub**   | **Single source of truth** — canonical repo, version history  |
+| **Server**   | Where everything happens — R / Python, figure generation      |
+| **Overleaf** | Just for writing LaTeX                                        |
 
-Overleaf and the server form a **live working pair** that sync constantly during the day. GitHub gets a single tidy commit at the end of the day instead of every Overleaf auto-save.
+GitHub is canonical: anything important must end up there. The server is where you actually work — generate figures, run analysis, edit code. Overleaf is the comfortable LaTeX editor for the writing parts; you periodically bring its writing back to the server, and the server pushes everything onward to GitHub.
 
 ---
 
@@ -165,7 +165,7 @@ thesis/
 
 ## Repo contents
 
-- [`scripts/`](scripts/) — the three helper scripts
+- [`scripts/`](scripts/) — the helper scripts (Overleaf↔server sync, GitHub backup, progress tracking)
 - [`templates/phd-thesis/`](templates/phd-thesis/) — bundled HU Berlin PhD thesis template (steinbrecht)
 - [`templates/.gitignore`](templates/.gitignore) — starter `.gitignore` for LaTeX + R + Python
 - [`docs/`](docs/) — setup, daily-workflow, authentication, and troubleshooting guides
