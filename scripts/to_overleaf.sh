@@ -32,6 +32,7 @@ else
   run git commit -m "$MESSAGE"
 fi
 
-run git push overleaf main
+# Push local 'main' to Overleaf's 'master' (Overleaf doesn't use 'main').
+run git push overleaf main:master
 
 echo "Done. Switch to Overleaf and recompile to see your changes."

@@ -14,7 +14,8 @@ run() {
 echo "=== Pulling latest changes from Overleaf ==="
 echo ""
 
-run git pull overleaf main
+# Overleaf uses 'master' as its branch name (regardless of what local uses).
+run git pull overleaf master
 
 echo "=== Current status ==="
 echo ""

@@ -28,6 +28,22 @@ git remote add github   git@github.com:<youruser>/<repo>.git
 
 The setup section in the README uses idempotent commands that handle this automatically.
 
+## `fatal: couldn't find remote ref main` (when pulling from Overleaf)
+
+Overleaf uses `master`, not `main`, as its branch name. The helper scripts in this tutorial already account for that (`from_overleaf.sh` pulls `overleaf master`, `to_overleaf.sh` pushes `main:master`). If you have an older copy of the scripts, refresh them from this tutorial:
+
+```bash
+cp /groups/nils/resources/tutorial_overleaf_github/scripts/*.sh .
+chmod +x *.sh
+```
+
+Manual one-shot fix without the scripts:
+
+```bash
+git pull overleaf master           # pull Overleaf's master into your local main
+git push overleaf main:master      # push your local main to Overleaf's master
+```
+
 ## "Authentication failed"
 
 You didn't enter the right token (Overleaf Git token, not your Overleaf password, they're different) or didn't add your SSH key to GitHub. See [03-authentication.md](03-authentication.md).
