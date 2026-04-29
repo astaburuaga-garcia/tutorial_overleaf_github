@@ -2,9 +2,11 @@
 # backup_to_github.sh, push the day's work to GitHub for version control
 # Usage: ./backup_to_github.sh "summary of the day's work"
 #
-# Before pushing, this also updates the thesis-progress log and plot:
+# Before pushing, this also:
+#   - compiles main.tex to main.pdf (if latexmk or pdflatex is on the server)
 #   - track_progress.sh logs today's page count to progress.csv
-#   - plot_progress.R regenerates figures/progress.pdf
+#   - plot_progress.R regenerates figures/progress.{pdf,png}
+#   - update_readme.sh refreshes the README dashboard
 
 set -e
 
@@ -22,6 +24,29 @@ run() {
   "$@"
   echo ""
 }
+
+# --- Compile main.tex to get a fresh main.pdf (non-fatal on failure) ---
+echo "=== Compiling main.tex ==="
+if [ -f main.tex ]; then
+  if command -v latexmk >/dev/null 2>&1; then
+    if latexmk -pdf -interaction=nonstopmode -silent main.tex >/dev/null 2>&1; then
+      echo "Compiled main.pdf via latexmk."
+    else
+      echo "(latexmk failed; continuing with the previous main.pdf if any)"
+    fi
+  elif command -v pdflatex >/dev/null 2>&1; then
+    if pdflatex -interaction=nonstopmode -halt-on-error main.tex >/dev/null 2>&1; then
+      echo "Compiled main.pdf via pdflatex (single pass; references may be stale)."
+    else
+      echo "(pdflatex failed; continuing with the previous main.pdf if any)"
+    fi
+  else
+    echo "(no latexmk or pdflatex on PATH; install texlive on the ITB server to enable auto-compile)"
+  fi
+else
+  echo "(no main.tex in this directory)"
+fi
+echo ""
 
 # --- Update progress log/plot (non-fatal if main.pdf isn't built yet) ---
 echo "=== Updating thesis progress ==="
