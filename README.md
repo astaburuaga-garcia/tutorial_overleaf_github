@@ -79,11 +79,14 @@ cd thesis
 git branch -m main 2>/dev/null || true
 git branch                                 # sanity check: should show "* main"
 
-# 3. Wire up the two remotes. Rename the default 'origin' (Overleaf) and add GitHub
-#    via SSH (NOT https; https will prompt for a password and fail).
-git remote rename origin overleaf
-git remote add github git@github.com:<youruser>/<repo-name>.git
-git remote -v                              # sanity check, github should start with git@github.com:
+# 3. Wire up the two remotes. The commands below are idempotent: they work whether
+#    you cloned from Overleaf, cloned from GitHub, or ran `git init`. Use SSH for
+#    GitHub (NOT https; https will prompt for a password and fail).
+git remote rename origin overleaf 2>/dev/null || true   # rename only if origin exists
+git remote add overleaf <overleaf-url> 2>/dev/null || git remote set-url overleaf <overleaf-url>
+git remote add github   git@github.com:<youruser>/<repo-name>.git 2>/dev/null \
+  || git remote set-url github git@github.com:<youruser>/<repo-name>.git
+git remote -v                              # sanity check: github should start with git@github.com:
 
 # 4. Copy the helper scripts and .gitignore template from the tutorial.
 cp /groups/nils/resources/tutorial_overleaf_github/scripts/*.sh .

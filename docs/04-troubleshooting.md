@@ -11,6 +11,23 @@ git push -u github main
 
 You need an SSH key on GitHub for this. See [03-authentication.md](03-authentication.md).
 
+## `error: No such remote: 'origin'`
+
+You didn't clone from Overleaf, so there's no `origin` to rename. Check what remotes you have, then add what's missing:
+
+```bash
+git remote -v
+
+# If both 'overleaf' and 'github' are already there, just make sure github uses SSH:
+git remote set-url github git@github.com:<youruser>/<repo>.git
+
+# If a remote is missing, add it:
+git remote add overleaf <overleaf-url>
+git remote add github   git@github.com:<youruser>/<repo>.git
+```
+
+The setup section in the README uses idempotent commands that handle this automatically.
+
 ## "Authentication failed"
 
 You didn't enter the right token (Overleaf Git token, not your Overleaf password, they're different) or didn't add your SSH key to GitHub. See [03-authentication.md](03-authentication.md).

@@ -67,9 +67,13 @@ git branch                                # sanity check: should show "* main"
 
 ### 6. Wire up the two remotes
 
+These commands are idempotent: they work whether you cloned from Overleaf, cloned from GitHub, or ran `git init`. **Use SSH for GitHub** (`git@github.com:...`), not HTTPS, to avoid password prompts.
+
 ```bash
-git remote rename origin overleaf
-git remote add github <github-url>
+git remote rename origin overleaf 2>/dev/null || true
+git remote add overleaf <overleaf-url> 2>/dev/null || git remote set-url overleaf <overleaf-url>
+git remote add github   git@github.com:<youruser>/<repo>.git 2>/dev/null \
+  || git remote set-url github git@github.com:<youruser>/<repo>.git
 git remote -v
 ```
 
