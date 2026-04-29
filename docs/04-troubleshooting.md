@@ -1,5 +1,16 @@
 # Troubleshooting
 
+## `Password for 'https://...@github.com':`
+
+GitHub stopped accepting account passwords for git in 2021. The "password" it's asking for is a personal access token, not your GitHub login. The cleaner fix is to switch the remote to SSH instead:
+
+```bash
+git remote set-url github git@github.com:<youruser>/<repo>.git
+git push -u github main
+```
+
+You need an SSH key on GitHub for this. See [03-authentication.md](03-authentication.md).
+
 ## "Authentication failed"
 
 You didn't enter the right token (Overleaf Git token, not your Overleaf password, they're different) or didn't add your SSH key to GitHub. See [03-authentication.md](03-authentication.md).

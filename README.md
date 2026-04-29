@@ -56,12 +56,12 @@ Three phases: Overleaf side, GitHub side, server side. Do them in order.
 
 ### B. GitHub side
 
-1. Go to [github.com/new](https://github.com/new).
-2. Name the repo (e.g. `thesis`).
-3. **Private**.
-4. **Leave everything else unchecked**: no README, no .gitignore, no license. The repo must be empty.
-5. Copy the repo URL (SSH preferred: `git@github.com:youruser/thesis.git`).
-6. If you haven't already, add an SSH key to GitHub from the server. See [docs/03-authentication.md](docs/03-authentication.md).
+1. **Set up an SSH key from the ITB server to GitHub first.** See [docs/03-authentication.md](docs/03-authentication.md). Without an SSH key, every `git push` will prompt for a password and fail (GitHub stopped accepting account passwords in 2021; only SSH keys or personal access tokens work).
+2. Go to [github.com/new](https://github.com/new).
+3. Name the repo (e.g. `thesis`).
+4. **Private**.
+5. **Leave everything else unchecked**: no README, no .gitignore, no license. The repo must be empty.
+6. After creating, switch the page from `HTTPS` to `SSH` and copy the URL. It looks like `git@github.com:youruser/thesis.git` (note the `git@`, not `https://`). **Always use the SSH URL** in this tutorial; the HTTPS URL will trigger password prompts.
 
 ### C. Server side
 
@@ -79,10 +79,11 @@ cd thesis
 git branch -m main 2>/dev/null || true
 git branch                                 # sanity check: should show "* main"
 
-# 3. Wire up the two remotes. Rename the default 'origin' (Overleaf) and add GitHub.
+# 3. Wire up the two remotes. Rename the default 'origin' (Overleaf) and add GitHub
+#    via SSH (NOT https; https will prompt for a password and fail).
 git remote rename origin overleaf
-git remote add github <github-url>
-git remote -v                              # sanity check, both remotes should be listed
+git remote add github git@github.com:<youruser>/<repo-name>.git
+git remote -v                              # sanity check, github should start with git@github.com:
 
 # 4. Copy the helper scripts and .gitignore template from the tutorial.
 cp /groups/nils/resources/tutorial_overleaf_github/scripts/*.sh .

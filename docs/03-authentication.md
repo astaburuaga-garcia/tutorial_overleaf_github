@@ -6,7 +6,9 @@ You'll be authenticating against three services from the server: Overleaf, GitHu
 
 If you can already `ssh user@server` from your laptop, you're set. Otherwise, ask the server admin (Nils' group: Rosario, or your IT contact) for an account and configure your SSH key.
 
-## GitHub: SSH key (recommended)
+## GitHub: SSH key (use this, not HTTPS)
+
+GitHub stopped accepting account passwords for git operations in 2021. With an HTTPS remote, every push prompts for a password that, even if you type it correctly, won't work. Use SSH.
 
 ### One-time, on the server:
 
@@ -26,6 +28,15 @@ ssh -T git@github.com
 ```
 
 When you create the GitHub remote, use the **SSH URL** (`git@github.com:user/repo.git`), not the HTTPS one.
+
+### If you already have an HTTPS remote and want to switch to SSH
+
+```bash
+git remote -v                                                      # see current URL
+git remote set-url github git@github.com:<youruser>/<repo>.git     # swap to SSH
+git remote -v                                                      # confirm: starts with git@github.com:
+git push -u github main                                            # no password prompt now
+```
 
 ### Alternative: personal access token
 
