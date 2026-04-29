@@ -47,6 +47,11 @@ Three phases: Overleaf side, GitHub side, server side. Do them in order.
 
 ### A. Overleaf side
 
+> **HU Overleaf instance**: [latex.hu-berlin.de](https://latex.hu-berlin.de). Log in with your HU account.
+> If you've never used the HU Overleaf, see the official setup guide first:
+> [HU Digital Learning, Overleaf (HDL3)](https://www.digitale-lehre.hu-berlin.de/en/hu-digital-learning-and-teaching-landscape-hdl3-1/overleaf/hdl3-overleaf)
+> and the [HU Overleaf "Creating a document" tutorial](https://latex.hu-berlin.de/learn/how-to/Creating_a_document_in_Overleaf).
+
 1. Pick how to start your project:
    - **Use the bundled HU PhD template** (recommended). On the server:
      ```bash
