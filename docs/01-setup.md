@@ -56,7 +56,16 @@ git clone <overleaf-url> thesis
 cd thesis
 ```
 
-### 5. Wire up the two remotes
+### 5. Standardize the branch name to `main`
+
+Overleaf clones often arrive as `master`. The helper scripts assume `main`, so rename now to skip the `error: src refspec main does not match any` later.
+
+```bash
+git branch -m main 2>/dev/null || true   # no-op if already on main
+git branch                                # sanity check: should show "* main"
+```
+
+### 6. Wire up the two remotes
 
 ```bash
 git remote rename origin overleaf
@@ -73,14 +82,15 @@ overleaf   https://git.overleaf.com/<id> (fetch)
 overleaf   https://git.overleaf.com/<id> (push)
 ```
 
-### 6. Add the helper scripts
+### 7. Add the helper scripts
 
 ```bash
 cp /groups/nils/resources/tutorial_overleaf_github/scripts/*.sh .
-chmod +x *.sh
+cp /groups/nils/resources/tutorial_overleaf_github/scripts/plot_progress.R .
+chmod +x *.sh *.R
 ```
 
-### 7. Add `.gitignore` and folders
+### 8. Add `.gitignore` and folders
 
 ```bash
 cp /groups/nils/resources/tutorial_overleaf_github/templates/.gitignore .
@@ -89,13 +99,11 @@ mkdir -p code figures
 
 Edit `.gitignore` to match your data file types.
 
-### 8. First push to GitHub
+### 9. First push to GitHub
 
 ```bash
 git push -u github main
 ```
-
-(If the default branch is `master`, replace `main` with `master` here and in the helper scripts.)
 
 ## Sanity check
 

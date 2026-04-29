@@ -74,25 +74,28 @@ cd ~                                       # or wherever you want your thesis di
 git clone <overleaf-url> thesis
 cd thesis
 
-# 2. Wire up the two remotes. Rename the default 'origin' (Overleaf) and add GitHub.
+# 2. Make sure the default branch is named 'main'. Overleaf clones often come as 'master',
+#    and the helper scripts assume 'main'. This rename is a no-op if you're already on main.
+git branch -m main 2>/dev/null || true
+git branch                                 # sanity check: should show "* main"
+
+# 3. Wire up the two remotes. Rename the default 'origin' (Overleaf) and add GitHub.
 git remote rename origin overleaf
 git remote add github <github-url>
 git remote -v                              # sanity check, both remotes should be listed
 
-# 3. Copy the helper scripts and .gitignore template from the tutorial.
+# 4. Copy the helper scripts and .gitignore template from the tutorial.
 cp /groups/nils/resources/tutorial_overleaf_github/scripts/*.sh .
 cp /groups/nils/resources/tutorial_overleaf_github/scripts/plot_progress.R .
 cp /groups/nils/resources/tutorial_overleaf_github/templates/.gitignore .
 chmod +x *.sh *.R
 
-# 4. Create the project folders.
+# 5. Create the project folders.
 mkdir -p code figures
 
-# 5. First push to GitHub.
+# 6. First push to GitHub.
 git push -u github main
 ```
-
-> If your default branch is `master` instead of `main`, replace `main` with `master` in the last command and inside the helper scripts.
 
 ### Sanity check
 
